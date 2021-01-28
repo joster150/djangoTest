@@ -2,10 +2,9 @@ from django.shortcuts import render,redirect
 from django import forms
 from django.conf import settings
 import io,base64,urllib,json,sys,os
-import matplotlib.pyplot as plt
 from .forms import BookForm,DocumentationImageForm,DocumentationPostsForm,BooleanInput,CreateUserForm,NotebookForm,UploadFileForm,RawStepCardForm,RawStepCardFormSubmit,TextInput,NumberInput,Variable,TableParam,FileInput,tableCreation,FieldCreation,DataInt,DataFloat,DataString
 import pandas as pd
-from django.http import JsonResponse,QueryDict
+from django.http import JsonResponse
 from .models import step_tracker,Pipelines,Pipeline,ModelDefinition,Data,NotebookModel,DocumentationPosts,DocumentationImage
 from django.template.defaultfilters import slugify
 from importnb import Notebook
@@ -234,6 +233,7 @@ def home(request):
             pipelines.append(pipeline_dict)
     context['pipeline_list']=pipelines
     return render(request,template_name,context)
+@login_required(login_url="/login/")
 def pipeline_view(request):
     context={'active_view':'pipelines'}
     template_name="importJupyter/pipeline_list.html"
