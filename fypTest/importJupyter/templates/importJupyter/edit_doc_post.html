@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<div class="container-sm container-md form-control-group">
+    <div class="row justify-content-center">
+      <div class="col-6">
+    <h1>Images:</h1></div><div class="col-6"><h1>Uploaded:</h1></div></div>
+    <div class="row justify-content-center">
+      <div class="col-6">
+    <form method="POST"  enctype="multipart/form-data" id="imageForm">
+      {% csrf_token %}
+     {{ img_form.image }}
+     <h5 class="my-2">Caption: {{img_form.caption}}</h5>
+      <input type="submit" class="btn btn-success w-25 py-1" id="imageFormButton" value="Add">
+    </form>
+     </div>
+     <div class="col-6 text-center">
+     <ul class="list-group list-group-horizontal">
+     {%for im in images %}
+     <li class="list-group-item">{{im}}</li>
+    {%endfor%}
+    </ul>
+    </div>
+    </div>
+    <form method='POST' enctype='multipart/form-data'>
+      {% csrf_token %}
+      <h1>Title: {{ form.title }}</h1>
+    <div class="row justify-content-center">
+      <h1>Content:</h1>
+      <div class="col-6 text-center">
+    {{form.content}}
+      </div>
+      <div class="col-6 markdown-preview bg-light text-wrap text-break">
+      </div>
+      <button class="btn btn-success w-25 my-2" type='submit'>Submit</button>
+  </form>
+</div>
+
+
+{%endblock%}
+{% block javascriptblock %}
+{% load static %}
+<script src="{% static 'js/create_doc.js' %}"></script>
+  {% include 'markdown.html'%}
+<script>
+function auto_grow(element) {
+element.style.height = "5px";
+element.style.height = (element.scrollHeight)+"px";
+};
+auto_grow($("#id_content")[0]);
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<h1 class="bd-title">Login</h1>
+<form method="POST" action="">
+  {% csrf_token %}
+  Username:
+  <input type="text" name="username" placeholder="Username..." class="form-control">
+  Password:
+  <input type="password" name="password" placeholder="Password..." class="form-control">
+
+<input type="submit" name="Login">
+{% for message in messages %}
+<p>{{message}}</p>
+{% endfor %}
+
+</form>
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  <script src="{% static 'js/module_list.js' %}"></script>
+{% endblock %}

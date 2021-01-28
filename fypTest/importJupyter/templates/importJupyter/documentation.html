@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<div class="px-2 text-center">
+<button onclick="location.href='{{create_url}}'" type="button" class="btn btn-success">
+  Create New Post</button>
+ </div>
+<div class="row justify-content-center">
+    {% for obj in doc_list%}
+      {% include 'importJupyter/doc_card_grid.html' with doc_dict=obj%}
+    {% endfor %}
+</div>
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  {% include 'markdown.html'%}
+  <script src="{% static 'js/documentation.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,31 @@
+<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xlg-1 my-3">
+  <div class="card px-3 mx-auto" style="width:16rem;height:400px;overflow:auto">
+    <div class="card-body">
+      <h5 class="card-title">
+          {{mod_dict.name}}
+      </div>
+      <p class="card-text">
+          {{mod_dict.description}}
+      </p>
+      <h6 class="card-subtitle text-muted">
+        Functions:
+      </h6>
+        <ul class='list-inline funcinfo {{mod_dict.slug_name}}'>
+        {% for obj in mod_dict.functions %}
+          <li class="list-inline-item" {% if forloop.first %} style="font-weight: bold;" {% endif %} id="{{obj}}!{{mod_dict.slug_name}}">{{obj}}</li>
+        {% endfor %}
+        </ul>
+        <h6 class="card-subtitle text-muted">
+          Function Info for Selected:
+        </h6>
+        <p class="card-text text-center functionDoc {{mod_dict.slug_name}}">
+        {{mod_dict.first_func}}
+        </p>
+        <div class="card-footer text-center px-0">
+        <button onclick="location.href='{{mod_dict.notebook_html}}'" type="button" class="btn btn-success">
+           Show NB</button>
+         <button onclick="location.href='{{mod_dict.notebook_test_html}}'" type="button" class="btn btn-success">
+            Show Test</button>
+           </div>
+    </div>
+  </div>

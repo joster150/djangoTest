@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<h4 class="text-center">Pipeline Title: {{pipe_title}}</h4>
+<form method='POST' action='.' enctype='multipart/form-data'>
+<div class="row justify-content-center pipelinecontainer">
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xlg-2 my-3">
+    <div class="my-2 card mx-auto" style="width: 16rem;">
+      <div class="card-body text-center">
+        <h5 class="card-title addCard text-center mb-1 text-success">
+            Pipeline
+        </h5>
+
+          {% csrf_token %}
+        <button type="submit" class="submit_ajax_steps btn btn-primary">Submit</button>
+
+        <div><h6 class="text-muted my-0 toggle">Table Groups \/</h6><div class="my-1" style="display:none;">
+          {{table_groups|safe}}
+        </div></div>
+        <div><h6 class="text-muted my-0 toggle">Tables \/</h6><div class="my-1" style="display:none;">
+          {{tables_in_group|safe}}
+        </div></div>
+        <div><h6 class="text-muted my-0 toggle">Search Column \/</h6><div class="my-1" style="display:none;">
+          {{columns_in_table|safe}}
+        </div></div>
+        <div><h6 class="text-muted my-0 toggle">Search \/</h6><div class="my-1" style="display:none;">
+          <input type="text" id="myInput" onkeyup="mySearchFunction()" placeholder="Filter on selected col.." title="Filter">
+        </div></div>
+        <div><h6 class="text-muted my-0 toggle">Table \/</h6><div class="my-1" style="display:none;">
+          <div class='table-responsive text-center' style="height: 200px;overflow: auto;">
+            <table class="table text-xsmall mx-auto" id="myTable">
+            <thead>
+            <tr>
+              {% for col in table_data_columns%}
+              <th scope="col">{{col}}</th>
+              {% endfor %}
+            </tr>
+            </thead>
+            <tbody class="table_html">
+            {% for row in rows %}
+            <tr>
+            {% for col in table_data_columns %}
+            {% for c,r in row.items %}
+              {%if col == c %}
+              <td>{{r}}</td>
+              {% endif %}
+            {% endfor %}
+            {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+        </div>
+        </div>
+        </div>
+        <div><h6 class="text-muted my-0 toggle">Add to Output List \/</h6><div class="my-1" style="display:none;">
+        <p id="table_field_to_add"></p><button type="button" id="add_to_output">Add to Outputs</button>
+        </div></div>
+      </div></div></div>
+{% for step_title,step in step_dict.items %}
+
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xlg-2 my-3">
+    <div class="my-2 card mx-auto h-100" style="width: 16rem;">
+      <div class="card-body">
+        <h5 class="card-title steptitle text-center mb-1 text-success">{{step_title}}</h5>
+        <div><h6 class="text-muted my-0">Module/Function
+        </h6><p class="my-1">
+        {{step.module_function}}
+        </p></div>
+        <div><h6 class="text-muted my-0">Description
+        </h6><p class="my-1">
+        {{step.description|safe}}
+        </p></div>
+        <form class="{{step.step_class_title}}">
+          {{step.form|safe}}
+
+          <div><h6 class="text-muted my-0 toggle">Output \/
+          </h6><p class="my-1" style="display:none">
+          {{step.output}}
+          </p></div>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+  </div>
+</form>
+
+{% if active %}
+{% if table %}
+{% for tab in table_var %}
+<div class="col-12">
+  <div class="my-2 card mx-auto" style="width:100%;max-width:768px;">
+      <h5 class="card-title px-3 mb-1 text-success">Output</h5>
+      <div class='table-responsive text-center' style="overflow:auto;height: 500px">
+        <table class="table mx-auto">
+        <thead>
+        <tr>
+          {% for col in tab.cols%}
+          <th scope="col">{{col}}</th>
+          {% endfor %}
+        </tr>
+        </thead>
+        <tbody class="table_html">
+        {% for row in tab.rows %}
+        <tr>
+        {% for col in row%}
+          <td>{{col}}</td>
+        {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+      </div>
+    </div></div>
+{%endfor%}
+</div>
+{% endif %}
+
+{% if variable %}
+{% for var in vars %}
+<div class="col-12">
+  <div class="my-2 card mx-auto" style="width:100%;max-width:768px;">
+      <h5 class="card-title px-3 mb-1 text-success">Output</h5>
+    <div class="card-text text-center">
+      {{var.name}} : {{var.value}}
+  </div></div></div>
+{%endfor%}
+</div>
+{% endif %}
+{% if graph %}
+{% for g in graphs %}
+<div class="col-12">
+  <div class="my-2 card mx-auto" style="width:100%;max-width:768px;">
+      <h5 class="card-title px-3 mb-1 text-success">Output</h5>
+    <canvas id="myChart"></canvas>
+  </div></div></div>
+{%endfor%}
+</div>
+{% endif %}
+{% endif %}
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  <script src="{% static 'js/pipeline_completion.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+  <script>
+  const colorScheme = [
+      "#25CCF7","#FD7272","#54a0ff","#00d2d3",
+      "#1abc9c","#2ecc71","#3498db","#9b59b6","#34495e",
+      "#16a085","#27ae60","#2980b9","#8e44ad","#2c3e50",
+      "#f1c40f","#e67e22","#e74c3c","#ecf0f1","#95a5a6",
+      "#f39c12","#d35400","#c0392b","#bdc3c7","#7f8c8d",
+      "#55efc4","#81ecec","#74b9ff","#a29bfe","#dfe6e9",
+      "#00b894","#00cec9","#0984e3","#6c5ce7","#ffeaa7",
+      "#fab1a0","#ff7675","#fd79a8","#fdcb6e","#e17055",
+      "#d63031","#feca57","#5f27cd","#54a0ff","#01a3a4"
+  ];
+  var ctx,label,data,type,xlabel,ylabel,title,isline;
+
+  ctxs=$('#myChart');
+  var graphs_var=[JSON.parse({{ graphs|safe }})]
+  var cht;
+  for(cht=0;cht < ctxs.length;cht++){
+    label=graphs_var[cht]['legend'][0];
+    xlabel=graphs_var[cht]['xlabel'];
+    ylabel=graphs_var[cht]['ylabel'];
+    title=graphs_var[cht]['title'];
+    xlabelshow=true;
+    ylabelshow=true;
+    titleshow=true;
+    if(typeof(xlabel)=="undefined"){
+    xlabelshow=false;
+    }
+    if(typeof(ylabel)=="undefined"){
+    ylabelshow=false;
+    }
+    if(typeof(title)=="undefined"){
+    titleshow=false;
+    }
+    type=graphs_var[cht]['type'];
+    data=graphs_var[cht]['data'];
+    isLine=graphs_var[cht]['showLine'];
+    var datasets=[];
+    var temp_data=[]
+  for(i in data){
+    temp_data=[];
+    for(j in data[i]['x']){
+      temp_data.push({x:data[i]['x'][j],y:data[i]['y'][j]});
+    }
+    datasets.push({
+      data:temp_data,
+      label:label,
+      backgroundColor:colorScheme[i],
+      borderColor:colorScheme[i],
+      fill: false,
+      showLine:isLine
+    });
+  };
+    var myChart = new Chart(ctxs[cht], {
+        type: type,
+        data: {
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio:true,
+            elements: {
+              line: {
+                tension: 0
+                    }
+            },
+            title: {
+  					       display: titleshow,
+  					       text: title
+  				    },
+            scales: {
+    					xAxes: [{
+    						display: true,
+    						scaleLabel: {
+    							display: xlabelshow,
+    							labelString: xlabel
+    						}
+    					}],
+    					yAxes: [{
+    						display: true,
+    						scaleLabel: {
+    							display: ylabelshow,
+    							labelString: ylabel
+    						}
+    					}]
+          }
+        }
+    });
+
+  };
+
+  </script>
+{% endblock %}

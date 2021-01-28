@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+
+<form method='POST' enctype='multipart/form-data'>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type='submit'>Submit</button>
+</form>
+<ul class="list-group">
+{%for lab in labels%}
+<li class="list-group-item">{{lab}}
+<ul class="list-group">
+  {%for keylist in label_keys%}
+  {%if forloop.counter0 == forloop.parentloop.counter0%}
+  {%for key in keylist%}
+  <li class="list-group-item">{{key}}</li>
+  {%endfor%}
+  {%endif%}
+  {%endfor%}
+</ul>
+</li>
+{%endfor%}
+</ul>
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  <script src="{% static 'js/module_list.js' %}"></script>
+{% endblock %}

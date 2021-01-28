@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+{{html_content|safe}}
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  <script src="{% static 'js/module_list.js' %}"></script>
+{% endblock %}

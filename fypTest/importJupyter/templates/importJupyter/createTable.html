@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+
+<!---<h6 class="card-title mb-0 text-success text-muted">Name:</h6>'+response.field_form+'<input class="form-control" type="text" id="field_name" name="field_name"><h6 class="card-title  mb-0 text-success text-muted">Data Type:</h6><select name="data_type" id="data_type"><option value="string">String</option><option value="number">Number</option></select><h6 class="card-title mb-0 text-success text-muted">Max Length:</h6><input class="form-control" type="number" id="max_length" name="max_length"><h6 class="card-title mb-0 text-success text-muted">Blank and Null</h6><div><input class="form-check" type="checkbox" id="blank" name="blank" checked><label class="form-check-label" for="scales">Blank</label><input class="form-check" type="checkbox" id="null" name="null" checked><label class="form-check-label" for="null">Null</label>-->
+
+<!---Name-->
+
+<!---Verbose Name-->
+
+<!---Add field-->
+<div class="row justify-content-center">
+<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xlg-2 table_field">
+  <div class="my-2 card px-3 mx-auto" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title mb-0 text-success">
+          Create Table
+      </h5>
+      </div>
+      <!--<form method='POST' enctype='multipart/form-data'>{% csrf_token %}-->
+        <div class="form-group table-form-container">
+        {{form_table.as_p}}
+        <div class="card-footer text-center px-0">
+        <button type="button" class="submit_ajax_fields btn btn-primary">Submit</button>
+        <button type="button" class="addCard btn btn-primary">Add Field</button>
+        </div></div>
+      <!--</form>-->
+    </div>
+  </div>
+
+</div>
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  <script src="{% static 'js/createTable.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<div class="row mx-auto">
+<div class="col-12">
+<div class='table-responsive text-center' style="overflow:auto;height: 500px">
+  <table class="table mx-auto">
+  <thead>
+  <tr>
+    {% for col in columns%}
+    <th scope="col">{{col}}</th>
+    {% endfor %}
+    <th scope="col">Action</th>
+  </tr>
+  <tr>
+    {% for type in types%}
+    <th scope="col" class="small text-muted">{{type}}</th>
+    {% endfor %}
+    <th scope="col"></th>
+  </tr>
+  <tr>
+    {% for req in requireds%}
+    <th scope="col" class="small text-muted">{{req}}</th>
+    {% endfor %}
+    <th scope="col"></th>
+  </tr>
+  <tr>
+    {% for ml in max_lengths%}
+    <th scope="col" class="small text-muted">{{ml}}</th>
+    {% endfor %}
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody class="table_html">
+    <tr>
+      {% for col in columns%}
+      <td><input class="form-control ajax-row-input" type="text"></td>
+      {% endfor %}
+      <td><button class="add-data-row form-control" type="button">Add</button></td>
+    </tr>
+  {% for row in rows %}
+  <tr>
+  {% for col in columns%}
+  {% for c,r in row.items%}
+    {%if col == c %}
+    <td>{{r}}</td>
+    {% endif %}
+  {% endfor %}
+  {% endfor %}
+  <td> </td>
+  </tr>
+  {% endfor %}
+
+  </tbody>
+  </table>
+</div>
+</div>
+</div>
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  <script src="{% static 'js/view_data.js' %}"></script>
+{% endblock %}

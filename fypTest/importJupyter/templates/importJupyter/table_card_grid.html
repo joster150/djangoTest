@@ -1,0 +1,41 @@
+<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xlg-2 my-3">
+  <div class="card px-1 h-100 mx-auto" style="width: 16rem;">
+    <div class="card-body pt-2 pb-0">
+      <h5 class="card-title my-0">
+          {{table_dict.title}}
+      </div>
+      <div class="card-body d-flex flex-column py-1">
+        <h6 class="my-0">Group</h6>
+        {{obj.table_group}}
+        <h6 class="mb-0">Columns Definition</h6>
+      <div class='table-responsive' style='height:250px;overflow:auto;'>
+        <table class="card-table table small" style="display:inline-block;">
+        <thead>
+        <tr>
+          <th scope="col">Columns</th>
+          <th scope="col">Data Type</th>
+          <th scope="col">Required</th>
+          <th scope="col">Max Len</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for obj in table_dict.columns%}
+        <tr>
+          <td>{{obj.name}}</td>
+          <td>{{obj.d_type}}</td>
+          <td>{{obj.required}}</td>
+          <td>{{obj.max_length}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+      </div>
+        <h6 class="my-0">Created By</h6>
+          {{table_dict.user}}
+      </div>
+      <div class="card-footer text-center">
+      <button onclick="location.href='{{table_dict.view_data}}'" type="button" class="btn btn-success">
+         View/Add Data</button>
+         </div>
+    </div>
+  </div>

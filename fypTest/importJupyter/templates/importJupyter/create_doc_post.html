@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<div class="container-sm container-md form-control-group">
+  <form method='POST' enctype='multipart/form-data'>
+    {% csrf_token %}
+    <h1>Title: {{ form.title }}</h1>
+    <div class="row justify-content-center">
+      <h1>Content:</h1>
+      <div class="col-6 text-center">
+    {{form.content}}
+      </div>
+      <div class="col-6 markdown-preview bg-light text-wrap text-break">
+      </div>
+
+      <button class="btn btn-success w-25 my-2" type='submit'>Submit</button>
+
+
+  </form>
+</div>
+
+
+{%endblock%}
+{% block javascriptblock %}
+  {% include 'markdown.html'%}
+  <script>
+    function auto_grow(element) {
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight)+"px";
+    };
+
+    var content;
+    $('#id_content').on('change keyup paste', function() {
+    content=$(this).val();
+    $(".markdown-preview").html(marked(content));
+    MathJax.typeset()
+    });
+  </script>
+{% endblock %}

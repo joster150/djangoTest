@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+  <h1 class='text-center mb-4'>Test of required functionality</h1>
+    <div class="row">
+      <div class="col-sm-4 col-md-6">
+    <h3 class='text-muted my-2'>Graph File</h3>
+    <form method='POST' enctype='multipart/form-data'>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type='submit'>Submit</button>
+    </form>
+
+    <h3 class='text-muted my-2'>Usable modules</h3>
+    <ul class='list-inline'>
+    {% for obj in mod_list%}
+      <li class="modulename list-inline-item" id="{{obj.module_name}}">{{obj.module_name}}</li>
+
+    {% endfor %}
+    <div class="modinfo">
+      <b>Name: </b></br>
+      <b>Description: </b>
+    </div>
+    <div>
+    <b>Functions: </b>
+    <ul class="funcinfo list-inline">
+
+  </ul>
+  <b>Function Description</b>
+  <p class="functionDoc mb-1">
+  </p>
+  </div>
+  </div>
+    <img class="col-sm-8 col-md-6 img-responsive " src="data:image/png;base64,{{ im }}" alt="">
+  </div>
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  <script src="{% static 'js/testFunc.js' %}"></script>
+{% endblock %}

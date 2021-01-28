@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<div class="row justify-content-center pipelinecontainer">
+<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xlg-2 pipeline_field">
+  <div class="my-1 card px-3 mx-auto" style="width: 16rem;">
+    <div class="card-body">
+      <h5 class="card-title addCard text-center mb-0 text-success">
+          Add Card
+      </h5>
+      </div>
+      <form method='POST' enctype='multipart/form-data'>{% csrf_token %}
+        <div class="form-group pipeline-form-container">
+        {{form.as_p}}
+        </div>
+
+      <div class="card-footer text-center px-0">
+        <button type="button" class="submit_ajax_steps btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Redirect</button>
+        </div>
+      </form>
+
+  </div>
+</div>
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  <script src="{% static 'js/pipeline.js' %}"></script>
+{% endblock %}

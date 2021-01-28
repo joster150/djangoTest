@@ -1,0 +1,18 @@
+<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xlg-2 my-3">
+  <div class="card px-3 h-100 mx-auto" style="width:16rem;">
+    <div class="card-body py-1">
+      <h5 class="card-title my-0">
+          {{pipe_dict.title}}
+      </div>
+      <div class="card-body d-flex flex-column">
+        <h6>Description</h6>
+          {{pipe_dict.description|truncatewords:50}}
+        <h6>Created By</h6>
+          {{pipe_dict.user}}
+      </div>
+      <div class="card-footer text-center">
+      <button onclick="location.href='{{pipe_dict.completion_url}}'" type="button" class="btn btn-success">
+         Use Pipeline</button>
+         </div>
+    </div>
+  </div>

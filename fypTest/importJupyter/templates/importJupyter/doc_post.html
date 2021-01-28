@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<div class="container-sm container-md">
+<h1 class="border-bottom">{{post.title}} {% if request.user.is_authenticated %}
+<button onclick="location.href='{{post.edit}}'" type="button" class="my-1 btn btn-success">
+Edit</button>
+{%endif%}</h1>
+<div class="sm markdown-content bg-light text-wrap text-break">
+{{post.content}}
+</div>
+
+<div class="row justify-content-center">
+{%for im in post.images%}
+<div class="col-sm-12 col-md-6 col-lg-4 col-xlg-3 my-4">
+  <div class="card px-1 mx-auto bg-light">
+<img src='{{im.url}}' class="img-responsive" style="display: block;max-width:100%;max-height:500px;width: auto;height: auto;">
+{{im.caption}}
+  </div>
+</div>
+{%endfor%}
+</div>
+</br>
+
+Created by: {{post.user}}
+{% if request.user.is_authenticated %}
+<button onclick="location.href='{{post.edit}}'" type="button" class="btn btn-success">
+Edit</button>
+{%endif%}
+</div>
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  {% include 'markdown.html'%}
+  <script src="{% static 'js/documentation.js' %}"></script>
+{% endblock %}

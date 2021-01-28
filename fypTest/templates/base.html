@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  {% include 'navbar.html' with active_view=active_view%}
+  </head>
+  <body>
+    <div class="container-fluid py-3 mx-2 px-0 mx-0">
+    <!-- <h1>{{title}}{{user}}</h1> -->
+    {% block bodyblock%}
+    Replace me
+    {% endblock %}
+
+    </div>
+    {% include 'js.html' %}
+    {% block javascriptblock %}
+
+    {% endblock %}
+  </body>
+</html>

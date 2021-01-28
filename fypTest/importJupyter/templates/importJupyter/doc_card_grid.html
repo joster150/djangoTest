@@ -1,0 +1,14 @@
+<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xlg-4 my-3">
+  <div class="card px-1 mx-auto bg-light" style="width: 24rem;height: 500px">
+      <h1 class="card-title mt-2 mb-0 mx-2 border-bottom" style="height: 100px">
+          {{ doc_dict.title }}
+      </h1>
+      <div class="card-body my-0 py-0">
+        <div class="card-test markdown-content sm bg-white" style="height: 350px;overflow:hidden;">{{ doc_dict.post_content|truncatechars:300 }}</div>
+      <div class="card-footer text-center mt-auto" style="height: 50px">
+      <button onclick="location.href='{{doc_dict.url}}'" type="button" class="btn btn-success">
+         View</button>
+         </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<div class="px-2 text-center">
+<button onclick="location.href='{{create_url}}'" type="button" class="btn btn-success">
+  Create New Pipeline</button>
+ </div>
+<div class="row justify-content-center">
+    {% for obj in pipeline_list%}
+      {% include 'importJupyter/pipeline_card_grid.html' with pipe_dict=obj%}
+    {% endfor %}
+    </div>
+
+
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  <script src="{% static 'js/module_list.js' %}"></script>
+{% endblock %}
