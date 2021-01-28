@@ -129,7 +129,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOCAL_STATIC_CDN_PATH = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn_test')
 STATIC_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, 'static')#live cdn AWS S3
-STATICFILES_DIRS=[ os.path.join(BASE_DIR,"staticfiles")]
+STATICFILES_DIRS=[ LOCAL_STATIC_CDN_PATH ]
 
 SCRIPTS_ROOT =os.path.join(LOCAL_STATIC_CDN_PATH, 'nbscripts')
 SCRIPTS_URL='/nbscripts/'
